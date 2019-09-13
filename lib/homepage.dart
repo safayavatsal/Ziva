@@ -269,10 +269,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Divider(indent: 150.0,endIndent: 150.0,),
-              Text("Utility"),
-              Divider(indent: 150.0,endIndent: 150.0,),
-
               Container(
                 height: MediaQuery.of(context).size.height,
                 child: Products(),

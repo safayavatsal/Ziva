@@ -1,33 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'CategoryPageDetails.dart';
+
 void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange[600],
-        fontFamily: 'Manjari',
-        buttonColor: Colors.orange
-      ),
-      home: ProductDetails(1, 2, 3, 4, 5, 6),
-      color: Colors.white,
-    ));
+  title: 'Flutter Demo',
+  theme: ThemeData(
+      primarySwatch: Colors.deepOrange[600],
+      fontFamily: 'Manjari',
+  ),
+  home: ProductDetails(null,null,null,null,null,null),
+  color: Colors.white,
+));
 
 class ProductDetails extends StatefulWidget {
-  var prod_detail_name;
-  var prod_detail_subtitle;
-  var prod_detail_image;
-  var prod_detail_oldprice;
-  var prod_detail_newprice;
-  var prod_detail_desc;
-  ProductDetails(
-      this.prod_detail_name,
-      this.prod_detail_subtitle,
-      this.prod_detail_image,
-      this.prod_detail_oldprice,
-      this.prod_detail_newprice,
-      this.prod_detail_desc);
-
+  CategoryPageDetails pname,sname,oprice,nprice,image,desc;
+  ProductDetails(this.pname,this.sname,this.oprice,this.nprice,this.image,this.desc);
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
 }
@@ -38,7 +26,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(widget.prod_detail_name,
+        title: Text(widget.pname.pname,
             style: TextStyle(fontFamily: 'Manzari-Bold', color: Colors.orange)),
         backgroundColor: Colors.white,
       ),
@@ -49,7 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           children: <Widget>[
             Container(
               height: 300.0,
-              child: Image.asset(widget.prod_detail_image),
+              child: Image.network(widget.image.image),
             ),
             Container(
               child: Column(
@@ -62,7 +50,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Text(
-                            widget.prod_detail_name,
+                            widget.pname.pname,
                             style: TextStyle(
                                 fontSize: 20.0, fontWeight: FontWeight.bold),
                           ),
@@ -70,7 +58,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Padding(
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Text(
-                            widget.prod_detail_subtitle,
+                            widget.sname.sname,
                             style: TextStyle(fontSize: 18.0),
                           ),
                         )
@@ -81,15 +69,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, top: 10.0),
                           child: Text(
-                            widget.prod_detail_newprice,
+                            "Rs."'${widget.nprice.nprice}',
                             style:
-                                TextStyle(fontSize: 20.0, color: Colors.orange),
+                            TextStyle(fontSize: 20.0, color: Colors.orange),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, top: 5.0),
                           child: Text(
-                            widget.prod_detail_oldprice,
+                            "Rs."'${widget.nprice.oprice}',
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 fontSize: 15.0),
@@ -101,14 +89,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
             ),
-            RaisedButton(
-              onPressed: null,
+            MaterialButton(
+              onPressed: (){},
+              height: 50.0,
               child: Text(
                 "Add to cart",
-                style: TextStyle(color: Colors.orange),
+                style: TextStyle(color: Colors.white),
               ),
-              color: Theme.of(context).accentColor,
-              highlightColor: Colors.orange,
+              color: Colors.orange,
             ),
           ],
         ),

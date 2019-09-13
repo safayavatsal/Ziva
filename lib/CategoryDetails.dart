@@ -1,28 +1,41 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 import 'CategoryPageDetails.dart';
+import 'Categoryname.dart';
 import 'ProductDetails.dart';
-void main() => runApp(MaterialApp(
-  home: Products(),
-  color: Colors.white,
-));
+
 List<CategoryPageDetails> alldata = [];
 
-class Products extends StatefulWidget {
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.grey,
+        fontFamily: 'Manjari',
+      ),
+      home: CategoryDetails(null),
+      color: Colors.white,
+    ));
+
+class CategoryDetails extends StatefulWidget {
+  Categoryname categoryname;
+  CategoryDetails(this.categoryname);
 
   @override
-  _ProductsState createState() => _ProductsState();
+  _CategoryDetailsState createState() => _CategoryDetailsState();
 }
 
-class _ProductsState extends State<Products> {
+class _CategoryDetailsState extends State<CategoryDetails> {
   @override
   void initState() {
     // TODO: implement initState
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
         .child("Category")
-        .child("Pen");
+        .child(widget.categoryname.name);
     reference.once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
@@ -45,10 +58,17 @@ class _ProductsState extends State<Products> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          widget.categoryname.name,
+          style: TextStyle(
+              color: Colors.orange, fontFamily: 'Manzari-Bold', fontSize: 25.0),
+        ),
+      ),
       body: ListView(
         children: <Widget>[
           Column(
@@ -59,7 +79,7 @@ class _ProductsState extends State<Products> {
                 indent: 150.0,
                 endIndent: 150.0,
               ),
-              Text("Pen"),
+              Text(widget.categoryname.name),
               Divider(
                 indent: 150.0,
                 endIndent: 150.0,
@@ -89,7 +109,8 @@ class _ProductsState extends State<Products> {
                                           ),
                                           subtitle: Row(
                                             children: <Widget>[
-                                              Text("Rs."'${alldata[index].nprice}',
+                                              Text(
+                                                "Rs."'${alldata[index].nprice}',
                                                 style: TextStyle(
                                                     fontSize: 15.0,
                                                     color: Colors.orange),
