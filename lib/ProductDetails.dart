@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'CategoryPageDetails.dart';
+
+List<CategoryPageDetails> alldata = [];
 
 void main() => runApp(MaterialApp(
   title: 'Flutter Demo',
@@ -14,6 +18,7 @@ void main() => runApp(MaterialApp(
 ));
 
 class ProductDetails extends StatefulWidget {
+
   CategoryPageDetails pname,sname,oprice,nprice,image,desc;
   ProductDetails(this.pname,this.sname,this.oprice,this.nprice,this.image,this.desc);
   @override
@@ -21,6 +26,14 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, top: 5.0),
                           child: Text(
-                            "Rs."'${widget.nprice.oprice}',
+                            "Rs."'${widget.oprice.oprice}',
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 fontSize: 15.0),
@@ -89,18 +102,94 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
             ),
-            MaterialButton(
-              onPressed: (){},
-              height: 50.0,
-              child: Text(
-                "Add to cart",
-                style: TextStyle(color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.only(top:5.0,left: 20.0,right: 20.0,),
+              child: MaterialButton(
+                onPressed: addtocart,
+                height: 50.0,
+                child: Text(
+                  "Add to cart",
+                  style: TextStyle(color: Colors.white,fontSize: 20.0),
+                ),
+                color: Colors.orangeAccent,
               ),
-              color: Colors.orange,
             ),
+            Padding(
+              padding: const EdgeInsets.only(top:10.0,left: 20.0,right: 20.0,),
+              child: MaterialButton(
+                onPressed: (){},
+                height: 50.0,
+                child: Text(
+                  "Buy now",
+                  style: TextStyle(color: Colors.white,fontSize: 20.0),
+                ),
+                color: Colors.orangeAccent,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top:8.0),
+              child: FlatButton(
+                onPressed: addtowish,
+                color: Colors.white,
+                child: Text("Add to wish list",style: TextStyle(color: Colors.orange,fontSize: 15.0),),
+              ),
+            ),
+            Divider(
+              indent: 150.0,
+              endIndent: 150.0,
+            ),
+            Center(child:Text("Description"),),
+            Divider(
+              indent: 150.0,
+              endIndent: 150.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text(widget.desc.desc,style: TextStyle(fontSize: 15.0),),
+            )
           ],
         ),
       ),
     );
+  }
+  void addtocart() async{
+    String productname = widget.pname.pname;
+    String sellername = widget.sname.sname;
+    String oldprice = widget.oprice.oprice;
+    String newprice = widget.nprice.nprice;
+    String image =widget.image.image;
+    String description =widget.desc.desc;
+    DatabaseReference reference = FirebaseDatabase.instance.reference();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var data = {
+      "pname": productname,
+      "sname": sellername,
+      "oprice": oldprice,
+      "nprice":newprice,
+      "image": image,
+      "desc":description
+    };
+    print(data);
+    reference.child("Cart").child(user.uid).push().set(data);
+  }
+  void addtowish() async{
+    String productname = widget.pname.pname;
+    String sellername = widget.sname.sname;
+    String oldprice = widget.oprice.oprice;
+    String newprice = widget.nprice.nprice;
+    String image =widget.image.image;
+    String description =widget.desc.desc;
+    DatabaseReference reference = FirebaseDatabase.instance.reference();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var data = {
+      "pname": productname,
+      "sname": sellername,
+      "oprice": oldprice,
+      "nprice":newprice,
+      "image": image,
+      "desc":description
+    };
+    print(data);
+    reference.child("Wish list").child(user.uid).push().set(data);
   }
 }
