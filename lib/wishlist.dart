@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:ziva/summary.dart';
+import 'package:ziva/summarydetails.dart';
 
 import 'CategoryPageDetails.dart';
+import 'ProductDetails.dart';
 import 'cart.dart';
 void main() => runApp(MaterialApp(
   home: Wishlist(),
@@ -36,12 +39,18 @@ getdata() async{
     alldata.clear();
     for (var key in keys) {
       CategoryPageDetails d = CategoryPageDetails(
+        data[key]["id"],
+        data[key]["cname"],
         data[key]["pname"],
         data[key]["sname"],
         data[key]["oprice"],
         data[key]["nprice"],
         data[key]["image"],
         data[key]["desc"],
+          data[key]["price"],
+          data[key]["total"],
+          data[key]["quantity"],
+          data[key]["status"]
       );
       alldata.add(d);
     }
@@ -62,7 +71,7 @@ getdata() async{
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: alldata.length == 0? Center(child: Text("Loading..."),):
+        child: alldata.length == 0? Center(child: Text("No items to Wish list"),):
         ListView.builder(itemCount: alldata==null? 0 : alldata.length,
             itemBuilder: (_,int index){
               return Column(
@@ -71,9 +80,28 @@ getdata() async{
                     padding: const EdgeInsets.only(top:8.0),
                     child: Card(
                       child: ListTile(
+                        onTap: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ProductDetails(
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index]             ,
+
+                                    ))),
                         leading: Image.network(alldata[index].image,width: 60.0,),
                         title: Text(alldata[index].pname),
-                        trailing: CircleAvatar(child: IconButton(icon: Icon(Icons.add_shopping_cart,color: Colors.orange,), onPressed: null),),
+                        trailing: CircleAvatar(
+                          backgroundColor: Colors.orange,
+                          child: IconButton(icon: Icon(Icons.remove,color: Colors.white,),onPressed: (){
+                            delete(alldata[index].id);
+                          },),
+                        ),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,22 +132,20 @@ getdata() async{
             }
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FloatingActionButton(
-          elevation: 10.0,
-          tooltip: "Cart",
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Cart()));
-          },
-          backgroundColor: Colors.orange,
-          child: Icon(
-            Icons.shopping_cart,
-            color: Colors.white,
-          ),
-        ),
-      ),
     );
+  }
+
+  void delete(String id) async{
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    DatabaseReference databaseReference = await FirebaseDatabase.instance
+        .reference()
+        .child("Wish list")
+        .child(user.uid).child(id);
+    setState(() {
+      // Navigator.of(context).pop();
+      databaseReference.remove();
+      alldata.clear();
+      getdata();
+    });
   }
 }

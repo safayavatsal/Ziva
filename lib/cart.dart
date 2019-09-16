@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:ziva/summarydetails.dart';
 
 import 'CategoryPageDetails.dart';
+import 'ProductDetails.dart';
 void main() => runApp(MaterialApp(
   home: Cart(),
   color: Colors.white,
@@ -34,12 +36,18 @@ class _CartState extends State<Cart> {
       alldata.clear();
       for (var key in keys) {
         CategoryPageDetails d = CategoryPageDetails(
+          data[key]["id"],
+          data[key]["cname"],
           data[key]["pname"],
           data[key]["sname"],
           data[key]["oprice"],
           data[key]["nprice"],
           data[key]["image"],
           data[key]["desc"],
+          data[key]["price"],
+          data[key]["total"],
+          data[key]["quantity"],
+            data[key]["status"]
         );
         alldata.add(d);
       }
@@ -59,7 +67,7 @@ class _CartState extends State<Cart> {
         color: Colors.white,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: alldata.length == 0? Center(child: Text("Loading..."),):
+        child: alldata.length == 0? Center(child: Text("No items into cart"),):
         ListView.builder(itemCount: alldata==null? 0 : alldata.length,
             itemBuilder: (_,int index){
               return Column(
@@ -68,9 +76,28 @@ class _CartState extends State<Cart> {
                     padding: const EdgeInsets.only(top:8.0),
                     child: Card(
                       child: ListTile(
+                        onTap: () => Navigator.of(context).push(
+                            new MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    ProductDetails(
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index],
+                                      alldata[index]             ,
+
+                                    ))),
                         leading: Image.network(alldata[index].image,width: 60.0,),
+                        trailing: CircleAvatar(
+                          backgroundColor: Colors.orange,
+                          child: IconButton(icon: Icon(Icons.remove,color: Colors.white,),onPressed: (){
+                            delete(alldata[index].id);
+                          },),
+                        ),
                         title: Text(alldata[index].pname),
-                        trailing: CircleAvatar(child: IconButton(icon: Icon(Icons.add_shopping_cart,color: Colors.orange,), onPressed: null),),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,6 +146,20 @@ class _CartState extends State<Cart> {
         ),
       ),
     );
+  }
+
+  void delete(String id) async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    DatabaseReference databaseReference = await FirebaseDatabase.instance
+        .reference()
+        .child("Cart")
+        .child(user.uid).child(id);
+    setState(() {
+      // Navigator.of(context).pop();
+      databaseReference.remove();
+      alldata.clear();
+      getdata();
+    });
   }
 }
 

@@ -29,12 +29,18 @@ class _ProductsState extends State<Products> {
       alldata.clear();
       for (var key in keys) {
         CategoryPageDetails d = CategoryPageDetails(
+          data[key]["id"],
+          data[key]["cname"],
           data[key]["pname"],
           data[key]["sname"],
           data[key]["oprice"],
           data[key]["nprice"],
           data[key]["image"],
           data[key]["desc"],
+            data[key]["price"],
+            data[key]["total"],
+            data[key]["quantity"],
+            data[key]["status"]
         );
         alldata.add(d);
       }
@@ -117,6 +123,8 @@ class _ProductsState extends State<Products> {
                                       new MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               ProductDetails(
+                                                alldata[index],
+                                                alldata[index],
                                                 alldata[index],
                                                 alldata[index],
                                                 alldata[index],

@@ -1,8 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ziva/category.dart';
 import 'package:ziva/main.dart';
+import 'package:ziva/order.dart';
 import 'package:ziva/profile.dart';
 import 'package:ziva/service.dart';
 import 'package:ziva/wishlist.dart';
@@ -45,7 +47,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void logout() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+    FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
   }
 
   @override
@@ -144,6 +147,11 @@ class _HomePageState extends State<HomePage> {
             ),
             Divider(),
             ListTile(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Order()));
+              },
               contentPadding: EdgeInsets.only(left: 40.0),
               title: Text(
                 "My Order",

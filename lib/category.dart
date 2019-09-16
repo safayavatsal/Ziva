@@ -23,22 +23,27 @@ class Category extends StatefulWidget {
 }
 class _CategoryState extends State<Category> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
+
+  getdata(){
     DatabaseReference reference =  FirebaseDatabase.instance.reference().child("CategoryItems");
     reference.once().then((DataSnapshot snap){
       var keys = snap.value.keys;
       var data = snap.value;
       alldata.clear();
       for(var key in keys) {
-        Categoryname d = Categoryname(data[key]["Categoryname"]);
+        Categoryname d = Categoryname(data[key]["Categoryname"],data[key]["id"]);
         alldata.add(d);
       }
       setState(() {
         print(alldata.length);
       });
     });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getdata();
+    alldata.clear();
     super.initState();
   }
 

@@ -29,9 +29,9 @@ class CategoryDetails extends StatefulWidget {
 }
 
 class _CategoryDetailsState extends State<CategoryDetails> {
-  @override
-  void initState() {
-    // TODO: implement initState
+
+
+  getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
         .child("Category")
@@ -42,12 +42,18 @@ class _CategoryDetailsState extends State<CategoryDetails> {
       alldata.clear();
       for (var key in keys) {
         CategoryPageDetails d = CategoryPageDetails(
+          data[key]["id"],
+          data[key]["cname"],
           data[key]["pname"],
           data[key]["sname"],
           data[key]["oprice"],
           data[key]["nprice"],
           data[key]["image"],
           data[key]["desc"],
+          data[key]["price"],
+          data[key]["total"],
+          data[key]["quantity"],
+          data[key]["status"]
         );
         alldata.add(d);
       }
@@ -55,6 +61,12 @@ class _CategoryDetailsState extends State<CategoryDetails> {
         print(alldata.length);
       });
     });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getdata();
+    alldata.clear();
     super.initState();
   }
 
@@ -138,6 +150,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                                       new MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               ProductDetails(
+                                                alldata[index],
+                                                alldata[index],
                                                 alldata[index],
                                                 alldata[index],
                                                 alldata[index],
