@@ -1,5 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ziva/category.dart';
@@ -9,9 +10,12 @@ import 'package:ziva/profile.dart';
 import 'package:ziva/service.dart';
 import 'package:ziva/wishlist.dart';
 
+import 'CategoryDetails.dart';
+import 'Categoryname.dart';
 import 'Products.dart';
 import 'cart.dart';
-
+List<Categoryname> alldata = [];
+Categoryname categoryname;
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -255,13 +259,15 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               icon: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
-                child: Icon(
-                  Icons.search,
+                child: IconButton(
+                  icon: Icon(Icons.search,
                   size: 25.0,
                   color: Colors.orange,
                 ),
-              ),
-              onPressed: null)
+                  onPressed: (){
+                    showSearch(context: context, delegate: DataSearch());
+                  },
+              ),),)
         ],
         backgroundColor: Colors.white,
         title: Text(
@@ -305,3 +311,74 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+ class DataSearch extends SearchDelegate<String>{
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    return [
+      IconButton(icon: Icon(Icons.clear), onPressed: (){
+
+      })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: (){
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    final suggestionlist =query.isEmpty ? alldata : alldata.where((p) => p.name.startsWith(query)).toList();
+    DatabaseReference reference =  FirebaseDatabase.instance.reference().child("CategoryItems");
+    reference.once().then((DataSnapshot snap){
+      var keys = snap.value.keys;
+      var data = snap.value;
+      alldata.clear();
+      for(var key in keys) {
+        Categoryname d = Categoryname(data[key]["Categoryname"],data[key]["id"]);
+        alldata.add(d);
+      }
+    });
+    return ListView.builder(
+      itemCount: suggestionlist==null? 0 : suggestionlist.length,
+        itemBuilder: (context,index){
+          return ListTile(
+            title: RichText(
+              text: TextSpan(
+                text: suggestionlist == null? 0: suggestionlist[index].name.substring(0,query.length),
+                style: TextStyle(
+                  color: Colors.black,fontWeight: FontWeight.bold
+                ),
+                children: [
+                  TextSpan(
+                    text: suggestionlist == null? 0: suggestionlist[index].name.substring(query.length),
+                    style: TextStyle(color: Colors.grey)
+                  )
+                ]
+              ),
+            ),onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryDetails(suggestionlist[index])));
+          },
+          );
+        });
+
+  }
+
+ }

@@ -99,6 +99,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
       String usercontact = contact;
       String useraddress =address;
       DatabaseReference reference = FirebaseDatabase.instance.reference();
+      String id1 = reference.push().key;
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
       var data = {
         "id": id,
@@ -116,10 +117,11 @@ class _SummaryDetailsState extends State<SummaryDetails> {
         "email":useremail,
         "contact": usercontact,
         "address":useraddress,
-        "status":"waiting for confirm"
+        "userid": user.uid,
+        "orderid":id1
       };
       print(data);
-      reference.child("Order").child(user.uid).child(id).set(data);
+      reference.child("Order").child(id1).set(data);
     }
 
     return Scaffold(

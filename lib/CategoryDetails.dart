@@ -53,7 +53,9 @@ class _CategoryDetailsState extends State<CategoryDetails> {
           data[key]["price"],
           data[key]["total"],
           data[key]["quantity"],
-          data[key]["status"]
+          data[key]["status"],
+            data[key]["userid"],
+            data[key]["orderid"]
         );
         alldata.add(d);
       }

@@ -17,6 +17,7 @@ class _OrderState extends State<Order> {
   @override
   void initState() {
     // TODO: implement initState
+    alldata.clear();
     getdata();
     super.initState();
   }
@@ -26,11 +27,11 @@ class _OrderState extends State<Order> {
 
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
-        .child("Order")
-        .child(user.uid);
-    reference.once().then((DataSnapshot snap) {
+        .child("Order");
+    reference.orderByChild("userid").equalTo(user.uid).once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
+      print(data);
       alldata.clear();
       for (var key in keys) {
         CategoryPageDetails d = CategoryPageDetails(
@@ -45,7 +46,9 @@ class _OrderState extends State<Order> {
             data[key]["price"],
             data[key]["total"],
             data[key]["quantity"],
-            data[key]["status"]
+            data[key]["status"],
+            data[key]["userid"],
+            data[key]["orderid"]
         );
         alldata.add(d);
       }
@@ -67,7 +70,7 @@ class _OrderState extends State<Order> {
         width: MediaQuery.of(context).size.width,
         child: alldata.length == 0? Center(child: Text("No Orders"),):
         ListView.builder(
-            itemCount: alldata== -1? 0 : alldata.length,
+            itemCount: alldata== null? 0 : alldata.length,
             itemBuilder: (_,int index){
               return Column(
                 children: <Widget>[
@@ -76,14 +79,14 @@ class _OrderState extends State<Order> {
                     child: Card(
                       child: ListTile(
                         leading: Image.network(alldata[index].image,width: 60.0,),
-                        title: Text(alldata[index].pname),
+                        title: Text(alldata[index].pname == null ? '' :alldata[index].pname),
                         subtitle: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(top:8.0),
-                              child: Text(alldata[index].sname),
+                              child: Text(alldata[index].sname == null ? '' :alldata[index].sname),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top:8.0),
@@ -103,11 +106,11 @@ class _OrderState extends State<Order> {
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(alldata[index].status,style: TextStyle(fontSize: 12.0),),
+                                    child: Text(alldata[index].status == null ? '' :alldata[index].status,style: TextStyle(fontSize: 12.0),),
                                 ),
                                 FlatButton(
                                     onPressed: (){
-                                      delete(alldata[index].id);
+                                      delete(alldata[index].orderid);
                                     },
                                     child: Text("Cancel Order"))
                               ],
@@ -126,12 +129,9 @@ class _OrderState extends State<Order> {
     );
   }
 
-  void delete(String id) async{
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    DatabaseReference databaseReference = await FirebaseDatabase.instance
-        .reference()
-        .child("Order")
-        .child(user.uid).child(id);
+  void delete(String orderid) async{
+    DatabaseReference databaseReference = await FirebaseDatabase.instance.reference().child("Order").child(orderid);
+
     setState(() {
       // Navigator.of(context).pop();
       databaseReference.remove();
@@ -139,6 +139,7 @@ class _OrderState extends State<Order> {
       getdata();
     });
   }
+
 }
 
 
