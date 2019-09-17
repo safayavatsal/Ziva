@@ -153,7 +153,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(top:8.0),
-                            child: Text("Rs."'${widget.nprice}'),
+                            child: Text("Rs."'${price=int.parse(widget.nprice) * text}'),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left:8.0,top: 8.0),
@@ -275,7 +275,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                   child: Text("Confirm Order"),
                 ),
               )
-              
+
             ],
           ),
         ),

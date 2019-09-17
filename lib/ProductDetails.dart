@@ -46,10 +46,18 @@ class _ProductDetailsState extends State<ProductDetails> {
         .child(user.uid);
     reference.once().then((DataSnapshot snap){
       var keys = snap.value.keys;
+      print(keys);
           for(var key in keys){
             if(key == widget.id.id){
               print("added to wish");
               result =true;
+              final snackbar =SnackBar(
+                content: Text("Item Already Added to wish list"),
+              );
+              Scaffold.of(context).showSnackBar(snackbar);
+            }
+            else{
+              addtowish();
             }
           }
           print(result);
@@ -66,11 +74,16 @@ class _ProductDetailsState extends State<ProductDetails> {
         .child(user.uid);
     reference.once().then((DataSnapshot snap){
       var keys = snap.value.keys;
+      print(keys);
       for(var key in keys){
-        if(key == widget.id.id){
-          print("added to cart");
+       /* if(key == widget.id.id){
+          print("added to wish");
           result =true;
+
+          Scaffold.of(context).showSnackBar(new SnackBar(content: Text("Item Already addded to cart")));
         }
+        else{*/
+
       }
       print(result);
       return result;
@@ -199,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             FlatButton(
-                onPressed: addtowish,
+                onPressed: getwish,
                 child: getwish() == true ?Text("Added"):Text("Add to wish")
             ),
             Divider(

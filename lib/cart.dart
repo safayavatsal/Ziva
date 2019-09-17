@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ziva/summarydetails.dart';
 
 import 'CategoryPageDetails.dart';
@@ -79,15 +80,15 @@ class _CartState extends State<Cart> {
                         onTap: () => Navigator.of(context).push(
                             new MaterialPageRoute(
                                 builder: (BuildContext context) =>
-                                    ProductDetails(
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index],
-                                      alldata[index]             ,
+                                    SummaryDetails(
+                                      alldata[index].id,
+                                      alldata[index].cname,
+                                      alldata[index].pname,
+                                      alldata[index].sname,
+                                      alldata[index].oprice,
+                                      alldata[index].nprice,
+                                      alldata[index].image,
+                                      alldata[index].desc             ,
 
                                     ))),
                         leading: Image.network(alldata[index].image,width: 60.0,),
@@ -135,6 +136,17 @@ class _CartState extends State<Cart> {
                                 ),
                               ],
                             ),
+                            FlatButton(
+                              onPressed: (){movetowish(alldata[index].id,
+                                  alldata[index].cname,
+                                  alldata[index].pname,
+                                  alldata[index].sname,
+                                  alldata[index].oprice,
+                                  alldata[index].nprice,
+                                  alldata[index].image,
+                                  alldata[index].desc,);},
+                              child: Text("Move to Wish list"),
+                            )
                           ],
                         ),
                       ),
@@ -161,6 +173,27 @@ class _CartState extends State<Cart> {
       getdata();
     });
   }
-}
+
+ void  movetowish(String id, String cname, String pname, String sname, String oprice, String nprice, String image, String desc) async {
+
+    DatabaseReference reference = FirebaseDatabase.instance.reference();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var data = {
+      "id": id,
+      "cname": cname,
+      "pname": pname,
+      "sname": sname,
+      "oprice": oprice,
+      "nprice": nprice,
+      "image": image,
+      "desc": desc
+    };
+    print(data);
+    reference.child("Wish list").child(user.uid).child(id).set(data);
+    delete(id);
+  }
+  }
+
+
 
 

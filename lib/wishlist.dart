@@ -23,6 +23,7 @@ class _WishlistState extends State<Wishlist> {
   @override
   void initState() {
     // TODO: implement initState
+    alldata.clear();
     getdata();
     super.initState();
   }
@@ -122,6 +123,17 @@ getdata() async{
                                 ),
                               ],
                             ),
+                            FlatButton(
+                              onPressed: (){movetocart(alldata[index].id,
+                                alldata[index].cname,
+                                alldata[index].pname,
+                                alldata[index].sname,
+                                alldata[index].oprice,
+                                alldata[index].nprice,
+                                alldata[index].image,
+                                alldata[index].desc,);},
+                              child: Text("Move to cart"),
+                            )
                           ],
                         ),
                       ),
@@ -147,5 +159,23 @@ getdata() async{
       alldata.clear();
       getdata();
     });
+  }
+
+  void movetocart(String id, String cname, String pname, String sname, String oprice, String nprice, String image, String desc) async {
+    DatabaseReference reference = FirebaseDatabase.instance.reference();
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    var data = {
+      "id": id,
+      "cname": cname,
+      "pname": pname,
+      "sname": sname,
+      "oprice": oprice,
+      "nprice": nprice,
+      "image": image,
+      "desc": desc
+    };
+    print(data);
+    reference.child("Cart").child(user.uid).child(id).set(data);
+    delete(id);
   }
 }
