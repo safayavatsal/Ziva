@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'main.dart';
 
 
@@ -37,9 +39,22 @@ class _MyHomePageState extends State<MyHomePage> {
   final _contactfocusnode = FocusNode();
 
   void forgetpassword() async{
-    await _auth.sendPasswordResetEmail(email: _emailController.text);
+    ProgressDialog progressDialog = new ProgressDialog(context);
+    progressDialog.show();
+    await _auth.sendPasswordResetEmail(email: _emailController.text).catchError((e){
+      progressDialog.dismiss();
+      Fluttertoast.showToast(
+          msg: "Email cannot be sent",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
+    });
     if (_auth != null) {
       setState(() {
+        progressDialog.dismiss();
+        Fluttertoast.showToast(
+            msg: "Email has been added",
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_LONG);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
       });
     } else {

@@ -80,7 +80,7 @@ class _ProfileState extends State<Profile> {
                   title: Text("Name",style: TextStyle(decoration: TextDecoration.underline),),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
-                    child: Text(name != null? name: '',
+                    child: Text(name != null? name: 'Loading...',
                       style: TextStyle(fontSize: 15.0),),
                   ),
                 ),
@@ -95,7 +95,7 @@ class _ProfileState extends State<Profile> {
                   title: Text("Email Id",style: TextStyle(decoration: TextDecoration.underline),),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
-                    child: Text(email != null? email : '',
+                    child: Text(email != null? email : 'Loading...',
                       style: TextStyle(fontSize: 15.0),),
                   ),
                 ),
@@ -110,7 +110,7 @@ class _ProfileState extends State<Profile> {
                   title: Text("Contact Number",style: TextStyle(decoration: TextDecoration.underline),),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
-                    child: Text(contact != null? contact:'',
+                    child: Text(contact != null? contact:'Loading...',
                       style: TextStyle(fontSize: 15.0),),
                   ),
                 ),
@@ -128,7 +128,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top:8.0,bottom: 8.0),
-                    child: Text(address != null? address:'',
+                    child: Text(address != null? address:'Loading...',
                       style: TextStyle(fontSize: 15.0),),
                   ),
                 ),

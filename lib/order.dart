@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'CategoryPageDetails.dart';
 void main() => runApp(Order());
@@ -135,6 +136,10 @@ class _OrderState extends State<Order> {
     setState(() {
       // Navigator.of(context).pop();
       databaseReference.remove();
+      Fluttertoast.showToast(
+          msg: "Item Deleted",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
       alldata.clear();
       getdata();
     });

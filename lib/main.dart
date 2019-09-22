@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:ziva/register.dart';
 import 'Homepage.dart';
 import 'forgetpassword.dart';
@@ -169,12 +171,25 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   void _signInWithEmailAndPassword() async {
+    ProgressDialog progressDialog = new ProgressDialog(context);
+    progressDialog.show();
     final FirebaseUser user = (await _auth.signInWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
-    )) . user;
+    ).catchError((e){
+      progressDialog.dismiss();
+      Fluttertoast.showToast(
+          msg: "Login Failed",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
+    })) . user;
     if (user != null) {
       setState(() {
+        progressDialog.dismiss();
+            Fluttertoast.showToast(
+                msg: "Login Successful",
+                gravity: ToastGravity.BOTTOM,
+                toastLength: Toast.LENGTH_LONG);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
       });
     } else {

@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ziva/order.dart';
 import 'package:ziva/summary.dart';
 
@@ -122,6 +123,10 @@ class _SummaryDetailsState extends State<SummaryDetails> {
       };
       print(data);
       reference.child("Order").child(id1).set(data);
+      Fluttertoast.showToast(
+          msg: "Your Order is Confirmed",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
     }
 
     return Scaffold(

@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ziva/category.dart';
 import 'package:ziva/summary.dart';
@@ -263,6 +264,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     };
     print(data);
     reference.child("Cart").child(user.uid).child(id).set(data);
+    Fluttertoast.showToast(
+        msg: "Item Added to cart",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG);
   }
 
   void addtowish() async {
@@ -288,5 +293,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     };
     print(data);
     reference.child("Wish list").child(user.uid).child(id).set(data);
+    Fluttertoast.showToast(
+        msg: "Item Added to wishlist",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG);
   }
 }

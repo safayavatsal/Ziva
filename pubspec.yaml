@@ -31,6 +31,8 @@ dependencies:
   firebase_storage:
   intl:
   image_picker:
+  progress_dialog:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:

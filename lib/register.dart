@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 
 import 'Homepage.dart';
 
@@ -60,11 +62,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   // ignore: missing_return
   void validateandsubmit() async {
-
+    ProgressDialog progressDialog = new ProgressDialog(context);
+    progressDialog.show();
     final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
       email: emailcontrol.text,
       password: passwordcontrol.text,
-    )) . user;
+    ).catchError((e){
+      progressDialog.dismiss();
+      Fluttertoast.showToast(
+      msg: "Registration Failed",
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_LONG);
+    })) . user;
 
     DatabaseReference database = FirebaseDatabase.instance.reference();
     var data = {
@@ -76,7 +85,11 @@ class _MyHomePageState extends State<MyHomePage> {
     database.child("Users").child(user.uid).set(data);
     if (user != null) {
       setState(() {
-
+        progressDialog.dismiss();
+        Fluttertoast.showToast(
+            msg: "Registration Successful",
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_LONG);
         debugPrint(email);
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
       });
@@ -119,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: namecontrol,
                       onSaved: (value) => name = value,
                       textInputAction: TextInputAction.next,
-                      validator: (value) => value.isEmpty ? 'Please Enter the Email' : null,
+                      validator: (value) => value.isEmpty ? 'Please Enter the Name' : null,
                       onFieldSubmitted: (value){namefocus.unfocus();
                       FocusScope.of(context).requestFocus(contactfocus);},
                       decoration: InputDecoration(
@@ -141,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textInputAction: TextInputAction.next,
                       focusNode: contactfocus,
                       onSaved: (value) => contact = value,
-                      validator: (value) => value.isEmpty ? 'Please Enter the Name' : null,
+                      validator: (value) => value.isEmpty ? 'Please Enter Contact No' : null,
                       onFieldSubmitted: (value){
                         contactfocus.unfocus();
                         FocusScope.of(context).requestFocus(emailfocus);
@@ -164,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onSaved: (value) => email = value,
                       textInputAction: TextInputAction.next,
                       focusNode: emailfocus,
-                      validator: (value) => value.isEmpty ? 'Please Enter the password' : null,
+                      validator: (value) => value.isEmpty ? 'Please Enter the email' : null,
                       onFieldSubmitted: (value){
                         emailfocus.unfocus();
                         FocusScope.of(context).requestFocus(passwordfocus);
@@ -189,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       textInputAction: TextInputAction.next,
                       controller: passwordcontrol,
                       focusNode: passwordfocus,
-                      validator: (value) => value.isEmpty ? 'Please Enter the Contact No' : null,
+                      validator: (value) => value.isEmpty ? 'Please Enter the Password' : null,
                       onFieldSubmitted: (value){
                         passwordfocus.unfocus();
                         FocusScope.of(context).requestFocus(addressfocus);
@@ -213,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: addresscontrol,
                       focusNode: addressfocus,
                       onSaved: (value) => address = value,
-                      validator: (value) => value.isEmpty ? 'Please Enter the Contact No' : null,
+                      validator: (value) => value.isEmpty ? 'Please Enter the address' : null,
                       onFieldSubmitted: (value){
                         addressfocus.unfocus();
                       },

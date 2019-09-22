@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ziva/summarydetails.dart';
 
@@ -171,6 +172,10 @@ class _CartState extends State<Cart> {
     setState(() {
       // Navigator.of(context).pop();
       databaseReference.remove();
+      Fluttertoast.showToast(
+          msg: "Item Deleted",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
       alldata.clear();
       getdata();
     });
@@ -193,6 +198,10 @@ class _CartState extends State<Cart> {
     print(data);
     reference.child("Wish list").child(user.uid).child(id).set(data);
     delete(id);
+    Fluttertoast.showToast(
+        msg: "Item move to wishlist",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG);
   }
   }
 
