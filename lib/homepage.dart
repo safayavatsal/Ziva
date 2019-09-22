@@ -317,7 +317,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement buildActions
     return [
       IconButton(icon: Icon(Icons.clear), onPressed: (){
-
+        query = "";
       })
     ];
   }
@@ -339,7 +339,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-    return null;
+    return buildSuggestions(context);
   }
 
   @override
