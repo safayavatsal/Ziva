@@ -16,33 +16,31 @@ class Products extends StatefulWidget {
 }
 
 class _ProductsState extends State<Products> {
-  @override
-  void initState() {
-    // TODO: implement initState
+
+  getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
-        .child("Category")
-        .child("Pen");
+        .child("Category");
     reference.once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
       alldata.clear();
       for (var key in keys) {
         CategoryPageDetails d = CategoryPageDetails(
-          data[key]["id"],
-          data[key]["cname"],
-          data[key]["pname"],
-          data[key]["sname"],
-          data[key]["oprice"],
-          data[key]["nprice"],
-          data[key]["image"],
-          data[key]["desc"],
+            data[key]['id'],
+            data[key]['cname'],
+            data[key]["pname"],
+            data[key]["sname"],
+            data[key]["oprice"],
+            data[key]["nprice"],
+            data[key]["image"],
+            data[key]["desc"],
             data[key]["price"],
             data[key]["total"],
             data[key]["quantity"],
             data[key]["status"],
             data[key]["userid"],
-            data[key]["orderid"]
+            data[key]["orderid"],
         );
         alldata.add(d);
       }
@@ -50,6 +48,11 @@ class _ProductsState extends State<Products> {
         print(alldata.length);
       });
     });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getdata();
     super.initState();
   }
 
@@ -67,7 +70,7 @@ class _ProductsState extends State<Products> {
                 indent: 150.0,
                 endIndent: 150.0,
               ),
-              Text("Pen"),
+              Text("All Products"),
               Divider(
                 indent: 150.0,
                 endIndent: 150.0,
@@ -83,7 +86,7 @@ class _ProductsState extends State<Products> {
                         padding: const EdgeInsets.all(3.0),
                         child: Card(
                           child: Hero(
-                              tag: alldata[index].sname,
+                              tag: '$index',
                               child: Material(
                                 child: InkWell(
                                   child: GridTile(

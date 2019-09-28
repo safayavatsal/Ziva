@@ -34,9 +34,8 @@ class _CategoryDetailsState extends State<CategoryDetails> {
   getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
-        .child("Category")
-        .child(widget.categoryname.name);
-    reference.once().then((DataSnapshot snap) {
+        .child("Category");
+    reference.orderByChild("cname").equalTo(widget.categoryname.name).once().then((DataSnapshot snap) {
       var keys = snap.value.keys;
       var data = snap.value;
       alldata.clear();
@@ -109,7 +108,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                         padding: const EdgeInsets.all(3.0),
                         child: Card(
                           child: Hero(
-                              tag: alldata[index].sname,
+                              tag: '$index',
                               child: Material(
                                 child: InkWell(
                                   child: GridTile(

@@ -276,21 +276,27 @@ class _HomePageState extends State<HomePage> {
               color: Colors.orange, fontFamily: 'Manzari-Bold', fontSize: 25.0),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          carousel,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.height,
-                child: Products(),
-              )
-            ],
-          )
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: ListView(
+          children: <Widget>[
+            carousel,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    child: Products(),
+                  ),
+                )
+              ],
+            )
 
-        ],
+          ],
+        ),
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(8.0),

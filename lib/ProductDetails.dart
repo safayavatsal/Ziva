@@ -38,33 +38,7 @@ class ProductDetails extends StatefulWidget {
 
 class _ProductDetailsState extends State<ProductDetails> {
 
-  getwish() async {
-    bool result =false;
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-    DatabaseReference reference = await FirebaseDatabase.instance
-        .reference()
-        .child("Wish list")
-        .child(user.uid);
-    reference.once().then((DataSnapshot snap){
-      var keys = snap.value.keys;
-      print(keys);
-          for(var key in keys){
-            if(key == widget.id.id){
-              print("added to wish");
-              result =true;
-              final snackbar =SnackBar(
-                content: Text("Item Already Added to wish list"),
-              );
-              Scaffold.of(context).showSnackBar(snackbar);
-            }
-            else{
-              addtowish();
-            }
-          }
-          print(result);
-          return result;
-    });
-  }
+
 
   getcart() async {
     bool result =false;
@@ -213,8 +187,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
             ),
             FlatButton(
-                onPressed: getwish,
-                child: getwish() == true ?Text("Added"):Text("Add to wish")
+                onPressed: addtowish,
+                child: Text("Add to wish")
             ),
             Divider(
               indent: 150.0,

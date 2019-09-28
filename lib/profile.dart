@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
               padding: const EdgeInsets.only(top:28.0),
               child: CircleAvatar(
                 maxRadius: 50.0,
-                child: Icon(Icons.person),
+                child: Icon(Icons.person,),
               ),
             ),
             Padding(
@@ -92,6 +92,7 @@ class _ProfileState extends State<Profile> {
                 elevation: 10.0,
                 margin: EdgeInsets.only(top: 5.0),
                 child: ListTile(
+
                   title: Text("Email Id",style: TextStyle(decoration: TextDecoration.underline),),
                   subtitle: Padding(
                     padding: const EdgeInsets.only(top:8.0,bottom: 8.0),

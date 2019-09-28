@@ -137,7 +137,7 @@ class _OrderState extends State<Order> {
       // Navigator.of(context).pop();
       databaseReference.remove();
       Fluttertoast.showToast(
-          msg: "Item Deleted",
+          msg: "Order Deleted",
           gravity: ToastGravity.BOTTOM,
           toastLength: Toast.LENGTH_LONG);
       alldata.clear();
