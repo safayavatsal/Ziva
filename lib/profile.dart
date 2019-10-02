@@ -203,40 +203,42 @@ class _ProfileState extends State<Profile> {
             child: AlertDialog(
               title: Text("Update Profile"),
               content: Container(
-                height: 180.0,
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      validator: (value) =>
-                      value.isEmpty ? 'Please Enter the Name' : null,
-                      initialValue: name == null ? "" : name,
-                      onSaved: (value) => uname = value,
-                      decoration: InputDecoration(
-                          hintText: "Name",
-                          labelText: "Name",
-                          hintStyle: TextStyle(color: Colors.white)),
-                    ),
-                    TextFormField(
-                      validator: (value) =>
-                      value.isEmpty ? 'Please Enter the Seller Name' : null,
-                      onSaved: (value) => ucontact = value,
-                      initialValue: contact == null ? "" : contact,
-                      decoration: InputDecoration(
-                          hintText: "Contact Number",
-                          labelText: "Contact Number",
-                          hintStyle: TextStyle(color: Colors.white)),
-                    ),
-                    TextFormField(
-                      validator: (value) =>
-                      value.isEmpty ? 'Please Enter the Old Price' : null,
-                      initialValue: address == null ? "" : address,
-                      onSaved: (value) => uaddress = value,
-                      decoration: InputDecoration(
-                          hintText: "Address",
-                          labelText: "Address",
-                          hintStyle: TextStyle(color: Colors.white)),
-                    ),
-                  ],
+                height: 200.0,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      TextFormField(
+                        validator: (value) =>
+                        value.isEmpty ? 'Please Enter the Name' : null,
+                        initialValue: name == null ? "" : name,
+                        onSaved: (value) => uname = value,
+                        decoration: InputDecoration(
+                            hintText: "Name",
+                            labelText: "Name",
+                            hintStyle: TextStyle(color: Colors.white)),
+                      ),
+                      TextFormField(
+                        validator: (value) =>
+                        value.isEmpty ? 'Please Enter the Seller Name' : null,
+                        onSaved: (value) => ucontact = value,
+                        initialValue: contact == null ? "" : contact,
+                        decoration: InputDecoration(
+                            hintText: "Contact Number",
+                            labelText: "Contact Number",
+                            hintStyle: TextStyle(color: Colors.white)),
+                      ),
+                      TextFormField(
+                        validator: (value) =>
+                        value.isEmpty ? 'Please Enter the Old Price' : null,
+                        initialValue: address == null ? "" : address,
+                        onSaved: (value) => uaddress = value,
+                        decoration: InputDecoration(
+                            hintText: "Address",
+                            labelText: "Address",
+                            hintStyle: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               actions: <Widget>[
