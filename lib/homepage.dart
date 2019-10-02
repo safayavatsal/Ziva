@@ -11,10 +11,15 @@ import 'package:ziva/service.dart';
 import 'package:ziva/wishlist.dart';
 
 import 'CategoryDetails.dart';
+import 'CategoryPageDetails.dart';
 import 'Categoryname.dart';
+import 'ProductDetails.dart';
 import 'Products.dart';
 import 'cart.dart';
-List<Categoryname> alldata = [];
+List<Categoryname> alldata1 = [];
+List<CategoryPageDetails> alldata = [];
+ScrollController controller = new ScrollController();
+
 Categoryname categoryname;
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -27,23 +32,7 @@ void main() => runApp(MaterialApp(
       color: Colors.white,
     ));
 
-class DrawerItem {
-  String title;
-  IconData icon;
-  DrawerItem(this.title, this.icon);
-}
-
 class HomePage extends StatefulWidget {
-  final drawerItems = [
-    new DrawerItem("Home", Icons.home),
-    new DrawerItem("Category", Icons.home),
-    new DrawerItem("My Cart", Icons.home),
-    new DrawerItem("My Order", Icons.home),
-    new DrawerItem("My wish list", Icons.home),
-    new DrawerItem("Profile", Icons.home),
-    new DrawerItem("Customer Service", Icons.home),
-    new DrawerItem("Logout", Icons.home),
-  ];
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -53,6 +42,44 @@ class _HomePageState extends State<HomePage> {
   void logout() {
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
+  getdata(){
+    DatabaseReference reference = FirebaseDatabase.instance
+        .reference()
+        .child("Category");
+    reference.once().then((DataSnapshot snap) {
+      var keys = snap.value.keys;
+      var data = snap.value;
+      alldata.clear();
+      for (var key in keys) {
+        CategoryPageDetails d = CategoryPageDetails(
+          data[key]['id'],
+          data[key]['cname'],
+          data[key]["pname"],
+          data[key]["sname"],
+          data[key]["oprice"],
+          data[key]["nprice"],
+          data[key]["image"],
+          data[key]["desc"],
+          data[key]["price"],
+          data[key]["total"],
+          data[key]["quantity"],
+          data[key]["status"],
+          data[key]["userid"],
+          data[key]["orderid"],
+        );
+        alldata.add(d);
+      }
+      setState(() {
+        print(alldata.length);
+      });
+    });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    getdata();
+    super.initState();
   }
 
   @override
@@ -279,18 +306,94 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
+        color: Colors.white,
         child: ListView(
+          reverse: false,
           children: <Widget>[
             carousel,
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SingleChildScrollView(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Products(),
-                  ),
+                Divider(
+                  indent: 150.0,
+                  endIndent: 150.0,
+                ),
+                Text("All Products"),
+                Divider(
+                  indent: 150.0,
+                  endIndent: 150.0,
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: GridView.builder(
+                      scrollDirection: Axis.vertical,
+                      controller: controller,
+                      shrinkWrap: true,
+                      itemCount: alldata == null ? 0 : alldata.length,
+                      gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Card(
+                            child: Hero(
+                                tag: '$index',
+                                child: Material(
+                                  child: InkWell(
+                                    child: GridTile(
+                                      footer: Container(
+                                        color: Colors.white,
+                                        child: ListTile(
+                                            title: Text(
+                                              alldata[index].pname,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            subtitle: Row(
+                                              children: <Widget>[
+                                                Text("Rs."'${alldata[index].nprice}',
+                                                  style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      color: Colors.orange),
+                                                ),
+                                                Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 15.0),
+                                                  child: Text(
+                                                    "Rs."'${alldata[index].oprice}',
+                                                    style: TextStyle(
+                                                        decoration: TextDecoration
+                                                            .lineThrough),
+                                                  ),
+                                                ),
+                                              ],
+                                            )),
+                                      ),
+                                      child: Image.network(
+                                        alldata[index].image,
+                                        fit: BoxFit.fill,
+                                        height: 300.0,
+                                      ),
+                                    ),
+                                    onTap: () => Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                ProductDetails(
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                  alldata[index],
+                                                ))),
+                                  ),
+                                )),
+                          ),
+                        );
+                      }),
                 )
               ],
             )
@@ -351,15 +454,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    final suggestionlist =query.isEmpty ? alldata : alldata.where((p) => p.name.startsWith(query)).toList();
+    final suggestionlist =query.isEmpty ? alldata1 : alldata1.where((p) => p.name.toLowerCase().startsWith(query)).toList();
     DatabaseReference reference =  FirebaseDatabase.instance.reference().child("CategoryItems");
     reference.once().then((DataSnapshot snap){
       var keys = snap.value.keys;
       var data = snap.value;
-      alldata.clear();
+      alldata1.clear();
       for(var key in keys) {
         Categoryname d = Categoryname(data[key]["Categoryname"],data[key]["id"]);
-        alldata.add(d);
+        alldata1.add(d);
       }
     });
     return ListView.builder(
