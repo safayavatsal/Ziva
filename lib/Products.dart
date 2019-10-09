@@ -60,6 +60,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: ListView(
         children: <Widget>[
           Column(

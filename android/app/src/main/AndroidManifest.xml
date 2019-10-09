@@ -9,7 +9,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="ziva"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/icon_ziva">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

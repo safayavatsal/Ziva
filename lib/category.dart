@@ -50,6 +50,7 @@ class _CategoryState extends State<Category> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Categories",
             style: TextStyle(fontFamily: 'Manzari-Bold', color: Colors.orange)),

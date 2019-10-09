@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       drawer: Drawer(
         elevation: 10.0,
         child: ListView(
@@ -283,7 +284,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(
+          IconButton(onPressed: () {},
               icon: Padding(
                 padding: const EdgeInsets.only(right: 10.0),
                 child: IconButton(
@@ -297,10 +298,8 @@ class _HomePageState extends State<HomePage> {
               ),),)
         ],
         backgroundColor: Colors.white,
-        title: Text(
-          "Z I V A",
-          style: TextStyle(
-              color: Colors.orange, fontFamily: 'Manzari-Bold', fontSize: 25.0),
+        title: Image.asset(
+          "asset/images/Wordmark.png"
         ),
       ),
       body: Container(

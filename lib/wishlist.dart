@@ -67,6 +67,7 @@ getdata() async{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("My Wish list",style: TextStyle(fontFamily: 'Manzari-Bold',color: Colors.orange),),
         backgroundColor: Colors.white,

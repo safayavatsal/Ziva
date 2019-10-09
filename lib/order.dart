@@ -61,6 +61,7 @@ class _OrderState extends State<Order> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("My Orders",style: TextStyle(fontFamily: 'Manzari-Bold',color: Colors.orange),),
         backgroundColor: Colors.white,

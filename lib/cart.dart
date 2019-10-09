@@ -2,11 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 import 'package:ziva/summarydetails.dart';
 
 import 'CategoryPageDetails.dart';
-import 'ProductDetails.dart';
 void main() => runApp(MaterialApp(
   home: Cart(),
   color: Colors.white,
@@ -63,6 +61,7 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("My Cart",style: TextStyle(fontFamily: 'Manzari-Bold',color: Colors.orange),),
         backgroundColor: Colors.white,

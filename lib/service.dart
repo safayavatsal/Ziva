@@ -16,6 +16,7 @@ class _ServiceState extends State<Service> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
           "Our Service",

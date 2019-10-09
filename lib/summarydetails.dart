@@ -130,6 +130,7 @@ class _SummaryDetailsState extends State<SummaryDetails> {
     }
 
     return Scaffold(
+        resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Order Page",

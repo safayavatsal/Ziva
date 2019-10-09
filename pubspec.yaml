@@ -63,6 +63,8 @@ flutter:
     - asset/stapler/stapler2.jpg
     - asset/stapler/stapler3.jpg
     - asset/stapler/stapler4.jpg
+    - asset/images/icon-ziva.png
+    - asset/images/Wordmark.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: true,
+      resizeToAvoidBottomPadding: false,
       body: Container(
         color: Colors.black87,
         height: MediaQuery.of(context).size.height,
@@ -258,37 +258,37 @@ class _MyHomePageState extends State<MyHomePage> {
                           color: Colors.white),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric( vertical: 0.0,horizontal: 60.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        MaterialButton(
-                          onPressed: () async {
-                            if (formkey.currentState.validate()) {
-                            }
-                          },
-                          child: Text("Google",style: TextStyle(color: Colors.white,fontSize: 18.0),),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            side: BorderSide(color: Colors.grey
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          minWidth: 20.0,
-                          //  onPressed: movetoscreen,
-                          child: Text("Facebook",style: TextStyle(color: Colors.white,fontSize: 18.0),),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                            side: BorderSide(color: Colors.grey
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric( vertical: 0.0,horizontal: 60.0),
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       MaterialButton(
+                  //         onPressed: () async {
+                  //           if (formkey.currentState.validate()) {
+                  //           }
+                  //         },
+                  //         child: Text("Google",style: TextStyle(color: Colors.white,fontSize: 18.0),),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(5.0),
+                  //           side: BorderSide(color: Colors.grey
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       MaterialButton(
+                  //         minWidth: 20.0,
+                  //         //  onPressed: movetoscreen,
+                  //         child: Text("Facebook",style: TextStyle(color: Colors.white,fontSize: 18.0),),
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(5.0),
+                  //           side: BorderSide(color: Colors.grey
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

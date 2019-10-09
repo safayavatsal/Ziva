@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         color: Colors.black87,
         height: MediaQuery.of(context).size.height,
