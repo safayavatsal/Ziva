@@ -299,7 +299,7 @@ class _HomePageState extends State<HomePage> {
         ],
         backgroundColor: Colors.white,
         title: Image.asset(
-          "asset/images/Wordmark.png"
+          "asset/images/Wordmark.png",height: 80.0,
         ),
       ),
       body: Container(

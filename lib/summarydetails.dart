@@ -5,13 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ziva/order.dart';
-import 'package:ziva/summary.dart';
-
-
 import 'CategoryPageDetails.dart';
-import 'ProductDetails.dart';
-
+import 'package:mailer2/mailer.dart';
 List<CategoryPageDetails> alldata = [];
+Key key;
 
 void main() => runApp(MaterialApp(
   debugShowCheckedModeBanner: false,
@@ -127,6 +124,23 @@ class _SummaryDetailsState extends State<SummaryDetails> {
           msg: "Your Order is Confirmed",
           gravity: ToastGravity.BOTTOM,
           toastLength: Toast.LENGTH_LONG);
+      var options = new GmailSmtpOptions()
+        ..username = 'ktrajkot@gmail.com'
+        ..password = 'Mohammad@7752';
+      var transport = new SmtpTransport(options);
+
+      // Create the envelope to send.
+      var envelope = new Envelope()
+        ..from = 'ktrajkot@gmail.com'
+        ..fromName = 'Ziva'
+        ..recipients = ['${useremail}']
+        ..subject = 'Your Order'
+        ..text = 'Order id: '+id1 +'\nProduct: '+productname + '\nSeller Name :' +sellername +'\nPrice :' +price.toString() +'\nQty :' +qty.toString() + '\nTotal Price :' +ptotal.toString() + '\nImage :' +image;
+
+      // Finally, send it!
+      transport.send(envelope)
+          .then((_) => print('email sent!'))
+          .catchError((e) => print('Error: $e'));
     }
 
     return Scaffold(
@@ -276,11 +290,25 @@ class _SummaryDetailsState extends State<SummaryDetails> {
                   height: 50.0,
                   minWidth: MediaQuery.of(context).size.width,
                   onPressed: (){
-                    order();
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Order()));
+                    setState(() {
+                      if(text < 10){
+                        order();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Order()));
+                      }
+                      else{
+
+                      }
+                    });
+
                   },
                   color: Colors.orange,
-                  child: Text("Confirm Order"),
+                  child: Text(
+                    text >= 10 ? "Get Quatation" : "Confirm Order",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0
+                    ),
+                  ),
                 ),
               )
 

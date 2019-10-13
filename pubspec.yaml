@@ -33,6 +33,7 @@ dependencies:
   image_picker:
   progress_dialog:
   fluttertoast:
+  mailer2:
 
 dev_dependencies:
   flutter_test:
