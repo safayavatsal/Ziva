@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:ziva/category.dart';
+import 'package:ziva/main.dart';
 import 'package:ziva/summary.dart';
 import 'package:ziva/summarydetails.dart';
 
@@ -37,6 +38,15 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  void login() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
+  void wishlogin() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
+  void buylogin() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
 
 
 
@@ -146,17 +156,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                 left: 20.0,
                 right: 20.0,
               ),
-              child:
-              MaterialButton(
-                onPressed: addtocart,
-                height: 50.0,
-                child: getcart() == true?Text("Added"):
-                Text(
-                  "Add to cart",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
-                color: Colors.orangeAccent,
-              ),
+              child: FutureBuilder(
+                future: FirebaseAuth.instance.currentUser(),
+                builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                  if(snapshot.hasData){
+                    FirebaseUser user = snapshot.data;
+                    return MaterialButton(
+                      onPressed: addtocart,
+                      height: 50.0,
+                      child: Text(
+                        "Add to cart",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Colors.orangeAccent,
+                    );
+                  }
+                  else{
+                    return MaterialButton(
+                      onPressed: login,
+                      height: 50.0,
+                      child: Text(
+                        "Add to cart",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Colors.orangeAccent,
+                    );
+                  }
+                },
+              )
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -164,32 +191,65 @@ class _ProductDetailsState extends State<ProductDetails> {
                 left: 20.0,
                 right: 20.0,
               ),
-              child: MaterialButton(
-                onPressed: () {
+              child: FutureBuilder(
+                future: FirebaseAuth.instance.currentUser(),
+                builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                  if(snapshot.hasData){
+                    FirebaseUser user = snapshot.data;
+                    return  MaterialButton(
+                      onPressed: () {
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SummaryDetails(
-                    widget.id.id,
-                      widget.cname.cname,
-                      widget.pname.pname,
-                      widget.sname.sname,
-                      widget.oprice.oprice,
-                      widget.nprice.nprice,
-                      widget.image.image,
-                      widget.desc.desc
-                  )));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => SummaryDetails(
+                            widget.id.id,
+                            widget.cname.cname,
+                            widget.pname.pname,
+                            widget.sname.sname,
+                            widget.oprice.oprice,
+                            widget.nprice.nprice,
+                            widget.image.image,
+                            widget.desc.desc
+                        )));
 
+                      },
+                      height: 50.0,
+                      child: Text(
+                        "Buy now",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Colors.orangeAccent,
+                    );
+                  }
+                  else{
+                    return  MaterialButton(
+                      onPressed: buylogin,
+                      height: 50.0,
+                      child: Text(
+                        "Buy now",
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      ),
+                      color: Colors.orangeAccent,
+                    );
+                  }
                 },
-                height: 50.0,
-                child: Text(
-                  "Buy now",
-                  style: TextStyle(color: Colors.white, fontSize: 20.0),
-                ),
-                color: Colors.orangeAccent,
               ),
             ),
-            FlatButton(
-                onPressed: addtowish,
-                child: Text("Add to wish")
+            FutureBuilder(
+              future: FirebaseAuth.instance.currentUser(),
+              builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                if(snapshot.hasData){
+                  FirebaseUser user = snapshot.data;
+                  return FlatButton(
+                      onPressed: addtowish,
+                      child: Text("Add to wish")
+                  );
+                }
+                else{
+                  return FlatButton(
+                      onPressed: wishlogin,
+                      child: Text("Add to wish")
+                  );
+                }
+              },
             ),
             Divider(
               indent: 150.0,

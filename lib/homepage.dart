@@ -43,6 +43,9 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
   }
+  void login() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+  }
   getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
         .reference()
@@ -262,40 +265,67 @@ class _HomePageState extends State<HomePage> {
                   )),
             ),
             Divider(),
-            ListTile(
-              onTap: logout,
-              contentPadding: EdgeInsets.only(left: 40.0),
-              title: Text(
-                "Logout",
-                style: TextStyle(
-                  fontSize: 20.0,
-                ),
-              ),
-              leading: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  child: Icon(
-                    Icons.power_settings_new,
-                    color: Colors.white,
-                  )),
+            FutureBuilder(
+              future: FirebaseAuth.instance.currentUser(),
+              builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                if(snapshot.hasData){
+                  FirebaseUser user = snapshot.data;
+                  return ListTile(
+                    onTap: logout,
+                    contentPadding: EdgeInsets.only(left: 40.0),
+                    title: Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    leading: CircleAvatar(
+                        backgroundColor: Colors.orange,
+                        child: Icon(
+                          Icons.power_settings_new,
+                          color: Colors.white,
+                        )),
+                  );
+                }
+                else{
+                  return ListTile(
+                    onTap: login,
+                    contentPadding: EdgeInsets.only(left: 40.0),
+                    title: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    leading: CircleAvatar(
+                        backgroundColor: Colors.orange,
+                        child: Icon(
+                          Icons.power_settings_new,
+                          color: Colors.white,
+                        )),
+                  );
+                }
+              },
             ),
+
             Divider(),
           ],
         ),
       ),
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(onPressed: () {},
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon(Icons.search,
-                  size: 25.0,
-                  color: Colors.orange,
-                ),
-                  onPressed: (){
-                    showSearch(context: context, delegate: DataSearch());
-                  },
-              ),),)
+          IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Icon(
+                Icons.search,
+                size: 25.0,
+                color: Colors.orange,
+              ),
+            ),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },)
         ],
         backgroundColor: Colors.white,
         title: Image.asset(

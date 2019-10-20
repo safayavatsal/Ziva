@@ -19,7 +19,6 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   @override
   void initState() {
-    // TODO: implement initState
     getdata();
     super.initState();
   }
@@ -118,23 +117,6 @@ class _CartState extends State<Cart> {
                                 Padding(
                                   padding: const EdgeInsets.only(left:8.0,top: 8.0),
                                   child: Text("Rs."'${alldata[index].oprice}',style: TextStyle(decoration: TextDecoration.lineThrough),),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text("Qty:"),
-                                Padding(
-                                  padding: const EdgeInsets.only(left:8.0),
-                                  child: CircleAvatar(maxRadius: 16.0,child: IconButton(icon: Icon(Icons.add,size: 16.0,), onPressed: null)),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left:8.0),
-                                  child: Text("1"),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left:8.0),
-                                  child: CircleAvatar(maxRadius: 16.0,child: IconButton(icon: Icon(Icons.remove,size: 16.0,), onPressed: null)),
                                 ),
                               ],
                             ),

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:ziva/forgetpassword.dart';
+import 'package:ziva/homepage.dart';
 import 'package:ziva/register.dart';
-import 'Homepage.dart';
-import 'forgetpassword.dart';
 
 void main() => runApp(MyApp());
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -191,6 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 msg: "Login Successful",
                 gravity: ToastGravity.BOTTOM,
                 toastLength: Toast.LENGTH_LONG);
+
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
       });
     } else {

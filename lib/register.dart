@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-
-import 'Homepage.dart';
+import 'package:ziva/homepage.dart';
 
 void main() => runApp(Registerpage());
 final FirebaseAuth _auth = FirebaseAuth.instance;
