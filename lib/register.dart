@@ -247,16 +247,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(
-                          fontFamily: 'Manjari-Bold',
-                          fontSize: 20.0,
-                          color: Colors.white),
-                    ),
-                  ),
                   // Padding(
                   //   padding: const EdgeInsets.symmetric( vertical: 0.0,horizontal: 60.0),
                   //   child: Row(

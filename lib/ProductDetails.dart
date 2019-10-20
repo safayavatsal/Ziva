@@ -38,18 +38,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  void login() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
-  }
-  void wishlogin() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
-  }
-  void buylogin() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
-  }
-
-
-
+  
   getcart() async {
     bool result =false;
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -173,7 +162,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   }
                   else{
                     return MaterialButton(
-                      onPressed: login,
+                      onPressed: (){
+                        Fluttertoast.showToast(
+                            msg: "Please Login",
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_LONG);
+                      },
                       height: 50.0,
                       child: Text(
                         "Add to cart",
@@ -221,7 +215,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   }
                   else{
                     return  MaterialButton(
-                      onPressed: buylogin,
+                      onPressed: (){
+                        Fluttertoast.showToast(
+                            msg: "Please Login",
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_LONG);
+                      },
                       height: 50.0,
                       child: Text(
                         "Buy now",
@@ -245,7 +244,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                 }
                 else{
                   return FlatButton(
-                      onPressed: wishlogin,
+                      onPressed: (){
+                        Fluttertoast.showToast(
+                            msg: "Please Login",
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_LONG);
+                      },
                       child: Text("Add to wish")
                   );
                 }
