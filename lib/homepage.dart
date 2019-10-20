@@ -41,15 +41,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void logout() {
-    FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
-    Fluttertoast.showToast(
-        msg: "User Logout",
-        gravity: ToastGravity.BOTTOM,
-        toastLength: Toast.LENGTH_LONG);
+    setState(() {
+      FirebaseAuth.instance.signOut();
+      Fluttertoast.showToast(
+          msg: "User Logout",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
+      Navigator.of(context).pop();
+    });
+
   }
   void login() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
   }
   getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
