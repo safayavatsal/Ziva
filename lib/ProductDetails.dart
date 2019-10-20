@@ -38,7 +38,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  
+
   getcart() async {
     bool result =false;
     FirebaseUser user = await FirebaseAuth.instance.currentUser();

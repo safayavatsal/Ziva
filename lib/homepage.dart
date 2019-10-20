@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ziva/category.dart';
 import 'package:ziva/main.dart';
 import 'package:ziva/order.dart';
@@ -42,9 +43,13 @@ class _HomePageState extends State<HomePage> {
   void logout() {
     FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+    Fluttertoast.showToast(
+        msg: "User Logout",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_LONG);
   }
   void login() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
   }
   getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
