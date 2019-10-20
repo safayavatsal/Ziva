@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
               return HomePage();
             }
             else{
-              return MyHomePage(title: 'Flutter',);
+              return HomePage();
             }
           },
         )
