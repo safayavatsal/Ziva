@@ -8,6 +8,7 @@ import 'package:ziva/category.dart';
 import 'package:ziva/main.dart';
 import 'package:ziva/order.dart';
 import 'package:ziva/profile.dart';
+import 'package:ziva/register.dart';
 import 'package:ziva/service.dart';
 import 'package:ziva/wishlist.dart';
 
@@ -52,7 +53,10 @@ class _HomePageState extends State<HomePage> {
 
   }
   void login() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Loginpage()));
+  }
+  void register() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
   }
   getdata(){
     DatabaseReference reference = FirebaseDatabase.instance
@@ -315,7 +319,33 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
-
+            Divider(),
+            FutureBuilder(
+              future: FirebaseAuth.instance.currentUser(),
+              builder: (BuildContext context, AsyncSnapshot<FirebaseUser> snapshot){
+                if(snapshot.hasData){
+                  return Divider();
+                }
+                else{
+                  return ListTile(
+                    onTap: register,
+                    contentPadding: EdgeInsets.only(left: 40.0),
+                    title: Text(
+                      "Register",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    leading: CircleAvatar(
+                        backgroundColor: Colors.orange,
+                        child: Icon(
+                          Icons.power,
+                          color: Colors.white,
+                        )),
+                  );
+                }
+              },
+            ),
             Divider(),
           ],
         ),

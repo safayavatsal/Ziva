@@ -14,25 +14,25 @@ class Registerpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/main': (BuildContext context) => HomePage(),
+      },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.grey,
         fontFamily: 'Manjari',
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Register(),
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+class Register extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RegisterState extends State<Register> {
   GlobalKey<FormState> formkey = new GlobalKey<FormState>();
 
   final emailcontrol = TextEditingController();
@@ -69,9 +69,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ).catchError((e){
       progressDialog.dismiss();
       Fluttertoast.showToast(
-      msg: "Registration Failed",
-      gravity: ToastGravity.BOTTOM,
-      toastLength: Toast.LENGTH_LONG);
+          msg: "Registration Failed",
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_LONG);
     })) . user;
 
     DatabaseReference database = FirebaseDatabase.instance.reference();
@@ -90,7 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
             gravity: ToastGravity.BOTTOM,
             toastLength: Toast.LENGTH_LONG);
         debugPrint(email);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), ModalRoute.withName('/main'));
+        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     } else {
       debugPrint("Error");
@@ -287,5 +290,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-

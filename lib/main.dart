@@ -32,16 +32,12 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class Loginpage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _LoginpageState createState() => _LoginpageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _LoginpageState extends State<Loginpage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -127,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric( vertical: 20.0,horizontal: 60.0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       MaterialButton(
                         onPressed: () async {
@@ -136,16 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                         },
                         child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 18.0),),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          side: BorderSide(color: Colors.grey
-                          ),
-                        ),
-                      ),
-                      MaterialButton(
-                        minWidth: 20.0,
-                        onPressed: movetoscreen,
-                        child: Text("Register",style: TextStyle(color: Colors.white,fontSize: 18.0),),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           side: BorderSide(color: Colors.grey
@@ -187,17 +173,16 @@ class _MyHomePageState extends State<MyHomePage> {
     if (user != null) {
       setState(() {
         progressDialog.dismiss();
-            Fluttertoast.showToast(
-                msg: "Login Successful",
-                gravity: ToastGravity.BOTTOM,
-                toastLength: Toast.LENGTH_LONG);
-
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        Fluttertoast.showToast(
+            msg: "Login Successful",
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_LONG);
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
       });
     } else {
       print("failed");
     }
   }
 }
-
-

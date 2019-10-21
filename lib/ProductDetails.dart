@@ -164,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     return MaterialButton(
                       onPressed: (){
                         Fluttertoast.showToast(
-                            msg: "Please Login",
+                            msg: "Please Login or Register",
                             gravity: ToastGravity.BOTTOM,
                             toastLength: Toast.LENGTH_LONG);
                       },
@@ -217,7 +217,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     return  MaterialButton(
                       onPressed: (){
                         Fluttertoast.showToast(
-                            msg: "Please Login",
+                            msg: "Please Login or Register",
                             gravity: ToastGravity.BOTTOM,
                             toastLength: Toast.LENGTH_LONG);
                       },
@@ -246,7 +246,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   return FlatButton(
                       onPressed: (){
                         Fluttertoast.showToast(
-                            msg: "Please Login",
+                            msg: "Please Login or Register",
                             gravity: ToastGravity.BOTTOM,
                             toastLength: Toast.LENGTH_LONG);
                       },

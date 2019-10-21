@@ -52,10 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         progressDialog.dismiss();
         Fluttertoast.showToast(
-            msg: "Email has been added",
+            msg: "Email has been Sended",
             gravity: ToastGravity.BOTTOM,
             toastLength: Toast.LENGTH_LONG);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyHomePage()));
       });
     } else {
       print("failed");
