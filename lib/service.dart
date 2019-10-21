@@ -45,6 +45,14 @@ class _ServiceState extends State<Service> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                "Kamruddin Thavarbhai and Sons",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.only(top: 50.0),
               child: Text(
                 "Ziva app aims to provide best customer service and support, here you can buy all kind of stationary items.",
@@ -67,7 +75,15 @@ class _ServiceState extends State<Service> {
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
-                "1800 988 988",
+                "7265077752",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20.0),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Text(
+                "ktrajkot@gmail.com",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20.0),
               ),
@@ -87,7 +103,7 @@ class _ServiceState extends State<Service> {
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Text(
-                "Ground floor,zynth empire,nr.xender street,volvo street,Ahmedabad,Gujarat-380015",
+                "Para bazaar main road, Nr. Raiyanaka Tower, Rajkot - 360001",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20.0),
               ),
